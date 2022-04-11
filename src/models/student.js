@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   transaction_id: {
-    type: Number,
+    type: String,
     required: true,
   },
   transaction_date: {

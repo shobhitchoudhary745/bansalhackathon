@@ -5,6 +5,7 @@ const app = express();
 const Student=require('./models/student')
 const Event =require('./models/events')
 const cors=require('cors')
+const {sendWelcomeEmail}=require('./emails/email')
 app.use(cors())
 const port = process.env.PORT;
 app.use(express.json());
@@ -13,6 +14,9 @@ app.post('/student',async(req,res)=>{
     const student=new Student(req.body)
     try{
         await student.save();
+        const email=student.email
+        const name=student.first_name+" "+student.last_name
+        await sendWelcomeEmail(email,name)
         res.status(201).send(student);
     }
     catch(e){
