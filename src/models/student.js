@@ -58,6 +58,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  language:{
+    type:String,
+    required:true
+  }
 });
 
 const Student = mongoose.model("students", userSchema);
