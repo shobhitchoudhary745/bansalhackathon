@@ -11,6 +11,9 @@ const port = process.env.PORT;
 app.use(express.json());
 
 app.post('/student',async(req,res)=>{
+    if(req.headers.secret_key!==process.env.SECRET_KEY){
+        return res.status(401).send('you are try to access this route from outside the browser!');
+    }
     const student=new Student(req.body)
     try{
         await student.save();
@@ -25,6 +28,9 @@ app.post('/student',async(req,res)=>{
 })
 
 app.get('/student',async(req,res)=>{
+    if(req.headers.secret_key!==process.env.SECRET_KEY){
+        return res.status(401).send('you are try to access this route from outside the browser');
+    }
     try{
         const students=await Student.find()
         res.status(200).send(students)
@@ -35,6 +41,9 @@ app.get('/student',async(req,res)=>{
 })
 
 app.post('/login',(req,res)=>{
+    if(req.headers.secret_key!==process.env.SECRET_KEY){
+        return res.status(401).send('you are try to access this route from outside the browser');
+    }
     if(req.body.password==="admin@1234"&&req.body.email==="admin@gmail.com")
       {
          res.status(200).send({token:"bxhchxhxhfxfxhvhgjfytyry56558647545474"})
@@ -45,6 +54,9 @@ app.post('/login',(req,res)=>{
 })
 
 app.post('/event',async(req,res)=>{
+    if(req.headers.secret_key!==process.env.SECRET_KEY){
+        return res.status(401).send('you are try to access this route from outside the browser');
+    }
     try{
          const event=new Event(req.body)
          await event.save()
@@ -56,6 +68,9 @@ app.post('/event',async(req,res)=>{
 })
 
 app.get('/event',async(req,res)=>{
+    if(req.headers.secret_key!==process.env.SECRET_KEY){
+        return res.status(401).send('you are try to access this route from outside the browser');
+    }
     try{
         const events=await Event.find()
         res.status(200).send(events)
@@ -66,6 +81,9 @@ app.get('/event',async(req,res)=>{
 })
 
 app.delete('/event/:id',async(req,res)=>{
+    if(req.headers.secret_key!==process.env.SECRET_KEY){
+        return res.status(401).send('you are try to access this route from outside the browser');
+    }
     try{
         console.log('hello world')
          const event=await Event.findByIdAndDelete(req.params.id)
@@ -77,6 +95,9 @@ app.delete('/event/:id',async(req,res)=>{
 })
 
 app.patch('/event/:id',async(req,res)=>{
+    if(req.headers.secret_key!==process.env.SECRET_KEY){
+        return res.status(401).send('you are try to access this route from outside the browser');
+    }
     try{
          console.log('first')
          const event=await Event.findById(req.params.id)
